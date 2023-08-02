@@ -1,2 +1,2 @@
-# RecyclPalApp_Backend
-Plastic Pollution Solution.
+# RecyclPal App
+Plastic Pollution Solution Pal. Our Platform Empowers Users To Take Eco-Friendly Actions, Become More Deliberate About Trashing And Stashing Points and Mints By Participating In Environmental Protection And Plastic Pollution Management, Getting Actively Involved In Recycling Recyclable Plastics.Features Include Request For Recyclable Plastic Waste Collection, Track Status, Join Eco-Friendly "RecyclPal" Community, Connect And Make Impact As An Eco-Hero, Get Eco-Updates, Earn Point & Get Payments While Helping To Save Our Environment. Join us today! 🌿♻️
