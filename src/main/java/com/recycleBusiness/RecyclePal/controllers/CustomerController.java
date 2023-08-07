@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("api/v1/customer")
 @Slf4j
+@CrossOrigin("*")
 public class CustomerController {
     private final CustomerServiceImpl service;
 

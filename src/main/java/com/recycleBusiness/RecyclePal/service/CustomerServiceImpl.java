@@ -44,10 +44,10 @@ public class CustomerServiceImpl  implements  CustomerServices{
         Customer customer = modelMapper.map(registrationRequest,Customer.class);
 
         boolean isPresent = validateUsernameAndPassword(customer.getUsername(),customer.getEmail());
-        Address address = modelMapper.map(registrationRequest.getAddress(), Address.class);
+        //Address address = modelMapper.map(registrationRequest.getAddress(), Address.class);
 
-        Address savedAddress = addressRepository.save(address);
-        customer.setAddress(savedAddress);
+       // Address savedAddress = addressRepository.save(address);
+        //customer.setAddress(address);
 		if (isPresent)
             throw new CustomerWithEmailOrUsernameExist(String.format(USERNAME_OR_PASSWORD_NOT_VALID,customer.getEmail(),customer.getUsername()));
         String password = passwordEncoder.encode(customer.getPassword());
