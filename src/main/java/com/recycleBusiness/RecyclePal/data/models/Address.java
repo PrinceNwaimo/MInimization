@@ -1,5 +1,6 @@
 package com.recycleBusiness.RecyclePal.data.models;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,17 +10,14 @@ import lombok.*;
 @NoArgsConstructor
 @Entity
 @Builder
-@Table
+
+
 public class Address {
     @Id
-    @SequenceGenerator(
-            name = "Customer_sequence",
-            sequenceName = "Customer_sequence",
-            allocationSize = 1
-    )
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     private String houseNumber;
     private String streetName;
     private String city;
+    private String state;
 }

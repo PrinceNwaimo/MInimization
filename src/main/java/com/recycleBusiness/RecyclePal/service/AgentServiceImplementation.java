@@ -18,7 +18,7 @@ import com.recycleBusiness.RecyclePal.dto.request.AgentLoginRequest;
 import com.recycleBusiness.RecyclePal.dto.request.AgentRegistrationRequest;
 import com.recycleBusiness.RecyclePal.dto.request.CollectWasteRequest;
 import com.recycleBusiness.RecyclePal.dto.request.UpdateAgentRequest;
-import com.recycleBusiness.RecyclePal.dto.responce.*;
+import com.recycleBusiness.RecyclePal.dto.response.*;
 import com.recycleBusiness.RecyclePal.exception.*;
 import com.recycleBusiness.RecyclePal.utils.JwtUtils;
 import lombok.AllArgsConstructor;
@@ -55,19 +55,21 @@ public class AgentServiceImplementation  implements AgentService{
     @Override
     public AgentRegistrationResponse register(AgentRegistrationRequest agentRegistrationRequest) throws AgentRegistrationFailedException {
         Agent agent = modelMapper.map(agentRegistrationRequest, Agent.class);
-//        agent.setFirstName(agentRegistrationRequest.getFirstName());
-//        agent.setLastName(agentRegistrationRequest.getLastName());
-//        agent.setUsername(agentRegistrationRequest.getUsername());
-//        agent.setEmail(agentRegistrationRequest.getEmail());
         agent.setPassword(passwordEncoder.encode(agent.getPassword()));
+        if (agentExists(agentRegistrationRequest.getEmail())) throw new IllegalArgumentException(agentRegistrationRequest.getEmail() + "already exist");
         agentRepository.save(agent);
         return buildRegisterAgentResponse(agent.getAgentId());
 
     }
+    private boolean agentExists(String email){
+     Optional<Agent> found = agentRepository.findByEmail(email);
+     return found.isPresent();
+    }
 
     @Override
-    public AgentLoginResponse login(AgentLoginRequest agentLoginRequest) throws AgentNotFoundException, InvalidDetailsException {
+    public AgentLoginResponse login(AgentLoginRequest agentLoginRequest) throws RecycleException, UsernameNotFoundException {
         var foundAgent =agentRepository.findByEmail(agentLoginRequest.getEmail()).orElseThrow(()->new AgentNotFoundException("This is not a registered Agent, Kindly Register"))  ;
+        verifyAgent(foundAgent.getEmail());
         if(!passwordEncoder.matches(agentLoginRequest.getPassword(),foundAgent.getPassword())) {
             throw new InvalidDetailsException("Wrong login details, Kindly try again with the right information");
         }
@@ -210,14 +212,14 @@ public class AgentServiceImplementation  implements AgentService{
 
     private static AgentRegistrationResponse buildRegisterAgentResponse(Long agentId) {
         AgentRegistrationResponse agentRegistrationResponse = new AgentRegistrationResponse();
-        agentRegistrationResponse.setMessage(USER_REGISTRATION_SUCCESSFUL);
+        agentRegistrationResponse.setMessage(AGENT_REGISTRATION_SUCCESSFUL);
         agentRegistrationResponse.setId(agentId);
 
         return agentRegistrationResponse;
     }
     private static AgentLoginResponse buildLoginAgentResponse(Long agentId){
         AgentLoginResponse agentLoginResponse = new AgentLoginResponse();
-        agentLoginResponse.setMessage(USER_LOGIN_SUCCESSFUL);
+        agentLoginResponse.setMessage(AGENT_LOGIN_SUCCESSFUL);
         agentLoginResponse.setId(agentId);
 
         return agentLoginResponse;

@@ -6,7 +6,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AgentLoginRequest {
+public class EcopalLoginRequest {
     @JsonProperty("email")
     private String email;
 

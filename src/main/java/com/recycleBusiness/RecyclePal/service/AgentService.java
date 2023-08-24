@@ -5,7 +5,7 @@ import com.recycleBusiness.RecyclePal.dto.request.AgentLoginRequest;
 import com.recycleBusiness.RecyclePal.dto.request.AgentRegistrationRequest;
 import com.recycleBusiness.RecyclePal.dto.request.CollectWasteRequest;
 import com.recycleBusiness.RecyclePal.dto.request.UpdateAgentRequest;
-import com.recycleBusiness.RecyclePal.dto.responce.*;
+import com.recycleBusiness.RecyclePal.dto.response.*;
 import com.recycleBusiness.RecyclePal.exception.*;
 
 import java.util.List;
@@ -13,7 +13,7 @@ import java.util.List;
 public interface AgentService {
     AgentRegistrationResponse register(AgentRegistrationRequest agentRegistrationRequest) throws AgentRegistrationFailedException;
 
-    AgentLoginResponse login(AgentLoginRequest agentLoginRequest) throws AgentNotFoundException, InvalidDetailsException;
+    AgentLoginResponse login(AgentLoginRequest agentLoginRequest) throws RecycleException, UsernameNotFoundException;
 
     AgentResponse getAgentById(Long Id) throws RecycleException, UsernameNotFoundException;
 

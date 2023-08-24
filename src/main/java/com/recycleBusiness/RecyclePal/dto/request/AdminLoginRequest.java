@@ -6,7 +6,8 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AgentLoginRequest {
+public class AdminLoginRequest {
+
     @JsonProperty("email")
     private String email;
 

@@ -20,10 +20,12 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-public class Agent {
+
+public class Admin {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long agentId;
+    private Long adminId;
+
     private String firstName;
     private String lastName;
     private String email;

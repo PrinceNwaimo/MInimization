@@ -2,12 +2,14 @@ package com.recycleBusiness.RecyclePal.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.recycleBusiness.RecyclePal.data.models.Address;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
-public class AgentRegistrationRequest {
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
+public class EcopalRegistrationRequest {
     @JsonProperty("firstName")
     private String firstName;
     @JsonProperty("lastname")
@@ -17,6 +19,9 @@ public class AgentRegistrationRequest {
     @JsonProperty("password")
     private String password;
     @JsonProperty("address")
-    private Address address;
+    private String houseNumber;
+    private String streetName;
+    private String city;
+    private String state;
 
 }

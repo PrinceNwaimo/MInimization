@@ -1,12 +1,12 @@
 package com.recycleBusiness.RecyclePal.service;
 
-import com.recycleBusiness.RecyclePal.data.models.Customer;
-import com.recycleBusiness.RecyclePal.data.models.WasteCollectionRequest;
+import com.recycleBusiness.RecyclePal.data.models.Ecopal;
+import com.recycleBusiness.RecyclePal.data.models.PlasticPickUp;
 import com.recycleBusiness.RecyclePal.data.repository.WasteCollectionRequestRepository;
-import com.recycleBusiness.RecyclePal.dto.request.CustomerSubmitRequest;
-import com.recycleBusiness.RecyclePal.dto.request.WasteCollectionRequestDto;
-import com.recycleBusiness.RecyclePal.dto.responce.CustomerSubmitResponse;
-import com.recycleBusiness.RecyclePal.dto.responce.WasteCollectionResponse;
+import com.recycleBusiness.RecyclePal.dto.request.EcopalSubmitRequest;
+import com.recycleBusiness.RecyclePal.dto.request.PlasticPickUpRequest;
+import com.recycleBusiness.RecyclePal.dto.response.EcopalSubmitResponse;
+import com.recycleBusiness.RecyclePal.dto.response.PlasticPickUpResponse;
 import com.recycleBusiness.RecyclePal.exception.WasteNotCreated;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
@@ -23,26 +23,26 @@ public class WasteCollectionRequestServicesImpl implements WasteCollectionReques
     private final ModelMapper modelMapper;
 
     @Override
-    public WasteCollectionResponse createRequestDetails(WasteCollectionRequestDto requestDto) throws WasteNotCreated {
-        WasteCollectionRequest collectionRequest = modelMapper.map(requestDto, WasteCollectionRequest.class);
+    public PlasticPickUpResponse createRequestDetails(PlasticPickUpRequest requestDto) throws WasteNotCreated {
+        PlasticPickUp collectionRequest = modelMapper.map(requestDto, PlasticPickUp.class);
          wasteCollectionRequestRepository.save(collectionRequest);
-         boolean isSaved = collectionRequest.getRequesterId() != null;
+         boolean isSaved = collectionRequest.getPickerId() != null;
          if (!isSaved)
              throw new WasteNotCreated(WASTE_NOT_CREATED);
         return buildCreateWasteResponse(collectionRequest);
     }
 
 
-    public CustomerSubmitResponse submitRequest(CustomerSubmitRequest request) throws WasteNotCreated {
-        Customer customer = modelMapper.map(request, Customer.class);
-        WasteCollectionRequestDto wasteCollection = wasteCollectionBuild(request);
+    public EcopalSubmitResponse submitRequest(EcopalSubmitRequest request) throws WasteNotCreated {
+        Ecopal customer = modelMapper.map(request, Ecopal.class);
+        PlasticPickUpRequest wasteCollection = wasteCollectionBuild(request);
         customer.setAddress(wasteCollection.getAddress());
-        wasteCollection.setRequesterId(customer.getId());
+//        wasteCollection.setRequesterId(customer.getId());
         //wasteCollectionServices.createRequestDetails(wasteCollection);
-        return CustomerSubmitResponse.builder().message(WASTE_COLLECTION_IS_SUCCESSFULLY_CREATED).build();
+        return EcopalSubmitResponse.builder().message(WASTE_COLLECTION_IS_SUCCESSFULLY_CREATED).build();
     }
-    private WasteCollectionRequestDto wasteCollectionBuild(CustomerSubmitRequest request) {
-        return WasteCollectionRequestDto.builder()
+    private PlasticPickUpRequest wasteCollectionBuild(EcopalSubmitRequest request) {
+        return PlasticPickUpRequest.builder()
                 .createdTime(request.getCreatedTime())
                 .pickedUptime(request.getPickedUptime())
                 .quantity(request.getQuantity())
@@ -51,13 +51,13 @@ public class WasteCollectionRequestServicesImpl implements WasteCollectionReques
 
 
     @Override
-    public WasteCollectionResponse updateRequestDetails(WasteCollectionRequestDto requestDto) {
+    public PlasticPickUpResponse updateRequestDetails(PlasticPickUpRequest requestDto) {
 
         return null;
     }
 
-    private WasteCollectionResponse buildCreateWasteResponse(WasteCollectionRequest collectionRequest){
-        return WasteCollectionResponse.builder()
+    private PlasticPickUpResponse buildCreateWasteResponse(PlasticPickUp collectionRequest){
+        return PlasticPickUpResponse.builder()
                 .message(WASTE_COLLECTION_IS_SUCCESSFULLY_CREATED)
                 .build();
     }
