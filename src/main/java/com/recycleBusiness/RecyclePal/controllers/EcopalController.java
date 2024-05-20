@@ -29,7 +29,7 @@ public class EcopalController {
     }
 
 
-    @PatchMapping("/completeRegistration/")
+    @PatchMapping("/completeRegistration")
     public ResponseEntity<EcopalUpdateResponse> updateProfile(
             @RequestBody UpdateEcopalRequest request) {
         try {

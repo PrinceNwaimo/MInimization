@@ -10,7 +10,7 @@ import lombok.Setter;
 public class AgentRegistrationRequest {
     @JsonProperty("firstName")
     private String firstName;
-    @JsonProperty("lastname")
+    @JsonProperty("lastName")
     private String lastName;
     @JsonProperty("email")
     private String email;

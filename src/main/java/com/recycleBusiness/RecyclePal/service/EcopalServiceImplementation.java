@@ -98,7 +98,6 @@ public class EcopalServiceImplementation implements EcopalServices {
     }
 
     @Override
-    @Transactional
     public EcopalUpdateResponse updateProfile(UpdateEcopalRequest request) throws EcopalWithEmailOrUsernameExist, UsernameNotFoundException {
 
         Ecopal updateCustomer=

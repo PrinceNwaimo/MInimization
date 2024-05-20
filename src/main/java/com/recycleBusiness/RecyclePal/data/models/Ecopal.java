@@ -14,10 +14,10 @@ import java.time.LocalDateTime;
 @Builder
 public class Ecopal {
     @Id
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
 
     private String firstname;
     private String lastname;
