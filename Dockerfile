@@ -13,3 +13,4 @@ EXPOSE 8080
 # COPY target/RecyclPalApp_Backend ../app/
 ENTRYPOINT ["java", "-jar", "RecyclPalApp_Backend.jar"]
 
+
