@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/v1/ecopal")
+@RequestMapping("/api/v1/ecopal")
 @Slf4j
 @CrossOrigin("*")
 public class EcopalController {
