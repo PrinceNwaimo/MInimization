@@ -32,7 +32,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build . --file Dockerfile --tag princenwaimo/recyclepal:${{ github.sha }}
+        run: docker build . --file Dockerfile --tag kingaby/recyclepal:${{ github.sha }}
 
       - name: Push Docker image
-        run: docker push princenwaimo/recyclepal:${{ github.sha }}
+        run: docker push kingaby/recyclepal:${{ github.sha }}
