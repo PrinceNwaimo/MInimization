@@ -1,4 +1,4 @@
-name: Corrected log mail Sender
+name: Correct email log sender
 
 on:
   push:
@@ -51,9 +51,10 @@ jobs:
           password: ${{ secrets.GMAIL_APP_PASSWORD }}
           subject: Build logs for ${{ github.repository }} (#${{ github.run_id }})
           to: ${{ env.EMAILS }}
-          from: ${{ secrets.GMAIL_USERNAME }}
+          from: nwaimoprince12@gmail.com  # Specify the sender's email address
           ignore_cert: true
           body: |
             Build logs for ${{ github.repository }} (#${{ github.run_id }}):
             
             ${{ steps.build_step.outputs.build_logs }}
+
