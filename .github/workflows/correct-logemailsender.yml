@@ -1,4 +1,4 @@
-name: Correct Email with Log sender
+name: Log Email Sender
 
 on:
   push:
