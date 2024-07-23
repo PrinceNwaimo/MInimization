@@ -1,4 +1,4 @@
-name: Log Email Sender
+name: Corrected log mail Sender
 
 on:
   push:
@@ -26,7 +26,9 @@ jobs:
         id: build_step
         run: |
           mvn clean install > build.log 2>&1
+          cat build.log
           echo "::set-output name=build_logs::$(cat build.log)"
+        continue-on-error: true  # Allow the job to continue even if this step fails
 
       - name: Set environment variables
         id: vars
