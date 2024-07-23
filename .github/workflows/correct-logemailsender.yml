@@ -51,7 +51,7 @@ jobs:
           password: ${{ secrets.GMAIL_APP_PASSWORD }}
           subject: Build logs for ${{ github.repository }} (#${{ github.run_id }})
           to: ${{ env.EMAILS }}
-          from: builds@semicolon.africa
+          from: nwaimoprince12@gmail.com
           ignore_cert: true
           body: |
             Build logs for ${{ github.repository }} (#${{ github.run_id }}):
