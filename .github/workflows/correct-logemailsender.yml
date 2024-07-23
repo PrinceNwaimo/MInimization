@@ -28,7 +28,7 @@ jobs:
           mvn clean install > build.log 2>&1
           cat build.log
           echo "::set-output name=build_logs::$(cat build.log)"
-        continue-on-error: true  # Allow the job to continue even if this step fails
+        continue-on-error: true
 
       - name: Set environment variables
         id: vars
@@ -51,10 +51,9 @@ jobs:
           password: ${{ secrets.GMAIL_APP_PASSWORD }}
           subject: Build logs for ${{ github.repository }} (#${{ github.run_id }})
           to: ${{ env.EMAILS }}
-          from: nwaimoprince12@gmail.com  # Specify the sender's email address
+          from: ${{ secrets.GMAIL_USERNAME }}
           ignore_cert: true
           body: |
             Build logs for ${{ github.repository }} (#${{ github.run_id }}):
             
             ${{ steps.build_step.outputs.build_logs }}
-
