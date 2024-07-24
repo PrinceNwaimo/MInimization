@@ -1,38 +1,38 @@
-# name: CI
+name: CI
 
-# on:
-#   push:
-#     branches:
-#       - main
-#   pull_request:
-#     branches:
-#       - main
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
-# jobs:
-#   build-and-test:
-#     runs-on: ubuntu-latest
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
 
-#     steps:
-#     - name: Checkout code
-#       uses: actions/checkout@v2
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-#     - name: Set up JDK 11 (for Java projects)
-#       uses: actions/setup-java@v2
-#       with:
-#         java-version: '11'
-#       if: ${{ hashFiles('**/pom.xml') != '' }}
+    - name: Set up JDK 11 (for Java projects)
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+      if: ${{ hashFiles('**/pom.xml') != '' }}
 
-#     - name: Set up Python 3.8 (for Python projects)
-#       uses: actions/setup-python@v2
-#       with:
-#         python-version: '3.8'
-#       if: ${{ hashFiles('**/requirements.txt') != '' || hashFiles('**/tests/**/*.py') != '' }}
+    - name: Set up Python 3.8 (for Python projects)
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+      if: ${{ hashFiles('**/requirements.txt') != '' || hashFiles('**/tests/**/*.py') != '' }}
 
-#     - name: Set up Node.js 14 (for Node.js projects)
-#       uses: actions/setup-node@v2
-#       with:
-#         node-version: '14'
-#       if: ${{ hashFiles('**/package.json') != '' }}
+    - name: Set up Node.js 14 (for Node.js projects)
+      uses: actions/setup-node@v2
+      with:
+        node-version: '14'
+      if: ${{ hashFiles('**/package.json') != '' }}
 
     - name: Make the script executable
       run: chmod +x compile_and_test_any_language.sh
