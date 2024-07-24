@@ -1,0 +1,65 @@
+name: Log Mail Sender - correct
+
+on:
+  push:
+    branches:
+      - "main"
+
+env:
+  EMAILS: 'prince@semicolon.africa'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Build with Maven
+        id: build_step
+        run: |
+          mvn clean install > build.log 2>&1 || true
+          echo "::set-output name=build_logs::$(cat build.log)"
+        continue-on-error: true
+
+      - name: Archive Surefire reports
+        if: always()
+        run: |
+          mkdir -p surefire-reports
+          cp -r target/surefire-reports/* surefire-reports/ || true
+
+      - name: Set environment variables
+        id: vars
+        run: |
+          TIMESTAMP=$(date +%Y%m%d%H%M%S)
+          COMMIT_HASH=$(git rev-parse --short HEAD)
+          TAG="commit-${COMMIT_HASH}-timestamp-${TIMESTAMP}"
+          echo "TAG=${TAG}" >> $GITHUB_ENV
+          BRANCH_NAME=$(git rev-parse --abbrev-ref HEAD)
+          COMMIT_AUTHOR=$(git log -1 --pretty=format:'%an <%ae>')
+          echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_ENV
+          echo "COMMIT_AUTHOR=${COMMIT_AUTHOR}" >> $GITHUB_ENV
+
+      - name: Send build logs and Surefire reports via email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 587
+          username: ${{ secrets.GMAIL_USERNAME }}
+          password: ${{ secrets.GMAIL_APP_PASSWORD }}
+          subject: Build logs for ${{ github.repository }} (#${{ github.run_id }})
+          to: ${{ env.EMAILS }}
+          from: ${{ secrets.GMAIL_USERNAME }}
+          ignore_cert: true
+          body: |
+            Build logs for ${{ github.repository }} (#${{ github.run_id }}):
+            
+            ${{ steps.build_step.outputs.build_logs }}
+          attachments: build.log surefire-reports/*
