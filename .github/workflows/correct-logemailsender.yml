@@ -1,4 +1,4 @@
-name: Log Mail Sender
+name: Log Mail Sender- correct
 
 on:
   push:
